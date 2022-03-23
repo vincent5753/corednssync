@@ -25,4 +25,4 @@ ingress-nginx   ingress-nginx       NodePort    10.111.151.160   <none>        8
 kube-system     kube-dns            ClusterIP   10.96.0.10       <none>        53/UDP,53/TCP,9153/TCP       12d
 ```
 
-Grab the `service` and `servicenamespace` managed by ingress controller, and fill it into the deployment variable, that it.
+Grab the `servicename` and `servicenamespace` managed by ingress controller, and fill it into the deployment variable, that it.

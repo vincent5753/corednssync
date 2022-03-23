@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coredns-sync-deployment
+  labels:
+    app: coredns-sync
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: coredns-sync
+  template:
+    metadata:
+      labels:
+        app: coredns-sync
+    spec:
+      serviceAccountName: vp-sa
+      automountServiceAccountToken: true
+      containers:
+      - name: sync-container
+        image: vincent5753/corednssync
+        args: ['bash', '/sync/sync.sh']
+        env:
+        - name: svcname
+          value: "ingress-nginx"
+        - name: svcnamespace
+          value: "ingress-nginx"

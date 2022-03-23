@@ -6,6 +6,7 @@ This repo can help syncing k8s coredns dns record to let you expose your ingress
 I assume that you already had ingress and ingress controller ready.
 
 If you depoly your cluster on bare-metal machine, you will probably having a nodeport service managed by ingress controller to expose your ingress service.
+
 Find your NodePort service by using command
 ```
 kubectl get svc -A

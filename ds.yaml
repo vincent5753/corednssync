@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: core-dns-sync-ds
+  labels:
+    k8s-app: core-dns-sync-ds
+spec:
+  selector:
+    matchLabels:
+      name: core-dns-sync-ds
+  template:
+    metadata:
+      labels:
+        name: core-dns-sync-ds
+    spec:
+      serviceAccountName: vp-sa
+      automountServiceAccountToken: true
+      containers:
+      - image: vincent5753/corednssync_ds
+        name: ing-sync-ds-container
+        volumeMounts:
+        - mountPath: /sync/hosts
+          name: sync-hosts
+        args: [bash, sync_ds.sh,]
+        env:
+        - name: MY_NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: NODE_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+          #value: "xxx.xxx.xxx.xxx"
+        - name: svcname
+          value: "ingress-nginx"
+        - name: svcnamespace
+          value: "ingress-nginx"
+      volumes:
+      - name: sync-hosts
+        hostPath:
+          path: /etc/hosts
+          type: File

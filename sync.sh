@@ -63,12 +63,12 @@ cat <<EOL > YAML.Part3
     }
 EOL
 
-GetSACount (){
+GetINGCount (){
   curl -s --insecure -H "Authorization: Bearer $TOKEN" https://kubernetes/apis/extensions/v1beta1/namespaces/default/ingresses | jq -c '.items | length'
 }
 
 Gen_YAML_JSON (){
-  for i in $(seq 1 $SACount)
+  for i in $(seq 1 $INGCount)
   do
     current=$(($i - 1 ))
     # Get IngName
@@ -99,13 +99,13 @@ while true
 do
   echo "[INFO][TIME] $(date '+%y/%m/%d %X')"
 
-  SACount=$(GetSACount)
+  INGCount=$(GetINGCount)
 
-  if [ "$SACount" = "0" ]
+  if [ "$INGCount" = "0" ]
   then
     echo "[INFO][STATUS] No Ingress found!"
   else
-    echo "[INFO][STATUS] Found $SACount Ingress Services!"
+    echo "[INFO][STATUS] Found $INGCount Ingress Services!"
     Gen_YAML_JSON
     Update_CM
     echo ""

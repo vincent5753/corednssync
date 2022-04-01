@@ -3,6 +3,7 @@
 This repo can help syncing k8s coredns dns record to let you expose your ingress to k8s pods.
 
 ## Usage
+### On Single Node
 I assume that you already had ingress and ingress controller ready.
 
 If you depoly your cluster on bare-metal machine, you will probably having a nodeport service managed by ingress controller to expose your ingress service.
@@ -27,3 +28,6 @@ kube-system     kube-dns            ClusterIP   10.96.0.10       <none>        5
 ```
 
 Grab the `servicename` and `servicenamespace` managed by ingress controller, and fill it into the deployment variable, that it.
+
+### On Cluster
+Same like above, but using ds.yaml can also expose your service to node by modifying `/etc/hosts` on the Node with the `hostPath` in `ds.yaml` .

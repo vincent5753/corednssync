@@ -32,7 +32,7 @@ else
 fi
 
 # Define D4 YAML Template
-cat <<EOL > YAML.Part1
+cat <<EOF > YAML.Part1
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -46,9 +46,9 @@ data:
            lameduck 5s
         }
         ready
-EOL
+EOF
 
-cat <<EOL > YAML.Part3
+cat <<EOF > YAML.Part3
         kubernetes cluster.local in-addr.arpa ip6.arpa {
            pods insecure
            fallthrough in-addr.arpa ip6.arpa
@@ -61,7 +61,7 @@ cat <<EOL > YAML.Part3
         reload
         loadbalance
     }
-EOL
+EOF
 
 GetINGCount (){
   curl -s --insecure -H "Authorization: Bearer $TOKEN" https://kubernetes/apis/extensions/v1beta1/namespaces/default/ingresses | jq -c '.items | length'
